@@ -1,5 +1,8 @@
 const timeDIV = document.getElementById("time")
+const citeDIV = document.getElementById("cite")
+const authorDIV = document.getElementById("author")
 displayRemainingTime()
+displayQuote().then(r => {/* */})
 setInterval(displayRemainingTime, 1000)
 
 function displayRemainingTime() {
@@ -18,3 +21,20 @@ function displayRemainingTime() {
 }
 
 
+
+async function displayQuote() {
+    const quote = await getQuote()
+    citeDIV.textContent = quote.text
+    authorDIV.textContent = quote.author
+    console.log(quote)
+}
+
+async function getQuote() {
+    const response = await fetch("https://type.fit/api/quotes")
+    const res = await response.json()
+    return res[getRandomInt(res.length)]
+}
+
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
